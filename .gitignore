@@ -1,2 +1,24 @@
 __pycache__
 venv
+
+myaiassistant/node_modules
+myaiassistant/.pnp
+myaiassistant/.pnp.js
+
+# testing
+myaiassistant/coverage
+
+# production
+myaiassistant/build
+
+# misc
+myaiassistant/.DS_Store
+myaiassistant/.env.local
+myaiassistant/.env.development.local
+myaiassistant/.env.test.local
+myaiassistant/.env.production.local
+
+myaiassistant/npm-debug.log*
+myaiassistant/yarn-debug.log*
+myaiassistant/yarn-error.log*
+myaiassistant/.azure
