@@ -1,0 +1,9 @@
+.home {
+    background-image: url('https://raw.githubusercontent.com/JustinHennis1/image_assets/main/curtains.jpeg'); 
+    background-size: cover; 
+    background-position: center; 
+    background-repeat: no-repeat;
+    min-height: 100vh; 
+    display: flex; 
+    flex-direction: column;
+}

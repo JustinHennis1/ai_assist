@@ -1,0 +1,89 @@
+.recommended-movies-popup {
+    position: fixed;
+    top: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 997;
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    max-height: 80vh;
+    overflow-y: auto;
+    width: 80%;
+    max-width: 900px;
+  }
+  
+  .cardholder {
+    position: relative;
+    width: 100%;
+    max-height: calc(80vh - 40px);
+    background: linear-gradient(to bottom, #100 0%, #700 50%, #100 100%);
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    z-index: 500;
+    transition: height 0.3s ease-in-out;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    box-shadow: #700 0px 5px, #300 0px -5px;
+  }
+  
+  .cardholder::-webkit-scrollbar {
+    width: 12px;
+    background: rgba(0, 0, 0, 0.8);
+    border-radius: 10px;
+  }
+  
+  .cardholder::-webkit-scrollbar-thumb {
+    background: rgba(100, 0, 0, 0.7);
+    border-radius: 10px;
+    border: 3px solid rgba(0, 0, 0, 0.8);
+  }
+  
+  .cardholder::-webkit-scrollbar-thumb:hover {
+    background: rgba(100, 0, 0, 1);
+  }
+  
+  .cards-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-gap: 20px;
+    padding: 20px;
+  }
+  
+  .card {
+    position: relative;
+    color: white;
+    background-color: rgba(100, 0, 0, 0.7);
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.9);
+    z-index: 500;
+    transition: transform 0.3s ease-in-out, height 0.3s ease-in-out;
+    overflow: hidden;
+    font-size: calc(10px + 0.2vw);
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+  
+  .card-content {
+    display: flex;
+    align-items: center;
+    padding-bottom: 5px;
+  }
+  
+  .card-text {
+    margin-left: 20px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+  
+  .card:hover {
+    padding: 10px;
+    height: auto;
+    background-color: rgba(100, 0, 0, 0.85);
+    transition: padding 0.3s ease-in-out;
+  }

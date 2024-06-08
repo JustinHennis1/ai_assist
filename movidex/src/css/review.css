@@ -1,0 +1,85 @@
+.box {
+    position: fixed;
+    left: -18vw; /* Initially move the box off-screen to the left */
+    bottom: 50%;
+    width: calc(20vw + 20px);
+    height: 20vh;
+    overflow: hidden;
+    background-color: #002;
+
+    border-radius: 60px;
+    cursor: pointer;
+    z-index: 999;
+    transition: left 0.3s ease-in-out; /* Add a transition for smooth animation */
+  }
+
+  .box.open{
+    left: 0; /* Move the box back on-screen when the "open" class is applied */
+    height: 70vh;
+    bottom:20px;
+    transition: left 0.3s ease-in-out;
+  }
+
+
+  .box2 {
+    position: fixed;
+    left: -18vw; /* Initially move the box off-screen to the left */
+    bottom: 30%;
+    width: calc(20vw + 20px);
+    height: 20vh;
+    overflow: hidden;
+    background-color: #002;
+    
+    border-radius: 60px;
+    cursor: pointer;
+    z-index: 999;
+    transition: left 0.3s ease-in-out; /* Add a transition for smooth animation */
+  }
+
+  .box2.open{
+    left: 0; /* Move the box back on-screen when the "open" class is applied */
+    height: 70vh;
+    bottom:20px;
+    transition: left 0.3s ease-in-out;
+  }
+
+  
+  .box-office {
+    height: calc(100% - 150px);
+    padding: 10px;
+    overflow-y: auto;
+  }
+  
+h1 {
+    font-size: calc(1.1vw + 12px);
+    text-align: center;
+    font-family: 'Times New Roman', Times, serif;
+    color:white;
+}
+
+.sidebar {
+  position: absolute;
+  top: 25%;
+  right: 0;
+  height: 100%;
+  display: flex;
+  font-family: 'Garamond';
+  font-size: calc(1vh + 12px);
+  font-weight: bold;
+  justify-content: flex-end;
+  padding-right: 5px;
+  color: white;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  overflow: hidden;
+}
+  
+  .sidebar.open{
+    writing-mode: initial;
+    transform: rotate(0deg);
+  }
+
+  .box:hover, .box2:hover {
+    background-color: black;
+    transition: background-color 0.5s ease-in-out;
+  }

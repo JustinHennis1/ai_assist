@@ -1,24 +1,24 @@
 __pycache__
 venv
 
-myaiassistant/node_modules
-myaiassistant/.pnp
-myaiassistant/.pnp.js
+movidex/node_modules
+movidex/.pnp
+movidex/.pnp.js
 
 # testing
-myaiassistant/coverage
+movidex/coverage
 
 # production
-myaiassistant/build
+movidex/build
 
 # misc
-myaiassistant/.DS_Store
-myaiassistant/.env.local
-myaiassistant/.env.development.local
-myaiassistant/.env.test.local
-myaiassistant/.env.production.local
+movidex/.DS_Store
+movidex/.env.local
+movidex/.env.development.local
+movidex/.env.test.local
+movidex/.env.production.local
 
-myaiassistant/npm-debug.log*
-myaiassistant/yarn-debug.log*
-myaiassistant/yarn-error.log*
-myaiassistant/.azure
+movidex/npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.azure
