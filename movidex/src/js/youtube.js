@@ -14,9 +14,10 @@ async function fetchYoutube(id) {
         },
     };
 
+    const url = 'https://api.themoviedb.org/3/movie/'+id+'/videos?language=en-US';
+    // console.log(url);
     try {
-        const url = 'https://api.themoviedb.org/3/movie/'+id+'/videos?language=en-US';
-        
+
         const res = await fetch(url, options)
         
         if(!res.ok) {

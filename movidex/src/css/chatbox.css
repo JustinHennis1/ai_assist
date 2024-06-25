@@ -24,6 +24,7 @@
     border:2px solid black;
   }
   #chatTitle {
+
     padding-left: 20px;
   }
   
@@ -63,22 +64,25 @@
   .assistant-message {
     align-self: flex-start;
     font-weight: bold;
-    background-color: #d4141462;
-    color: #FFF;
+    background-color: #ffffffe6;
+    color: #171717;
   }
   
   .chatbox-input {
     display: flex;
+    width: 100%;
     border: none;
     align-items: center;
     z-index: 2;
   }
   
   .chatbox-input-field {
+    margin-left: 10px;
     color: white;
     display: block;
-    width: 50vw;
+    width: 35vw;
     border: none;
+    border-radius: 80px;
     padding: 15px;
     box-sizing: border-box;
     background-color: #444;
@@ -179,10 +183,12 @@
   .quoted-title {
     font-weight: bold;
     font-size: 18px;
-    color: rgb(252, 252, 252); 
+    color: rgb(226, 19, 19); 
     padding: 2px 4px;
     text-decoration: underline;
-    text-shadow: 1px 1px #000, -1px -1px #000;
+    background-color: black;
+    border-radius: 20px;
+   
    
   }
   
@@ -205,3 +211,6 @@
     background: #FFF;  /* Thumb color on hover */
   }
   
+  .ml-2 {
+    margin-left: 0;
+  }

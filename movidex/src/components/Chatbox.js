@@ -10,7 +10,7 @@ function Chatbox({ setPopupMovies, setShowRecommendedMovies }) {
   const [isWaiting, setIsWait] = useState(false);
   const [messages, setMessages] = useState([]);
   const inputRef = useRef(null);
-  const [showRecommended, setShowRecommended] = useState(true);
+
 
   const handleInputChange = (e) => {
     setInput(e.target.value);
@@ -20,11 +20,14 @@ function Chatbox({ setPopupMovies, setShowRecommendedMovies }) {
     setIsCollapsed(!isCollapsed);
   };
 
-  const toggleRec = () => {
-    setShowRecommended(!showRecommended);
-    setShowRecommendedMovies(!showRecommended);
+  const toggleViewRec = () => {
+    toggleChatbox();
+    const recheaderElement = document.getElementById('recheader');
+    if (recheaderElement) {
+      recheaderElement.scrollIntoView({ behavior: 'smooth' });
+    }
   };
-
+  
   const handleInputSubmit = useCallback(async () => {
     if (input.trim()) {
       setInput(''); // clear input
@@ -45,7 +48,7 @@ function Chatbox({ setPopupMovies, setShowRecommendedMovies }) {
         extractedTitles.push(match[1]);
       }
       setPopupMovies(extractedTitles);
-      setShowRecommendedMovies(extractedTitles.length > 0 && showRecommended);
+      setShowRecommendedMovies(extractedTitles.length > 0);
 
       // Format AI's response as a numbered list
       const responseItems = aiResponse.split(/\d+\./);
@@ -60,7 +63,7 @@ function Chatbox({ setPopupMovies, setShowRecommendedMovies }) {
         },
       ]);
     }
-  }, [input, setPopupMovies, setShowRecommendedMovies, showRecommended]);
+  }, [input, setPopupMovies, setShowRecommendedMovies]);
 
   const wrapQuotedTitles = (content) => {
     const quoteRegex = /"([^"]+)"/g;
@@ -78,9 +81,12 @@ function Chatbox({ setPopupMovies, setShowRecommendedMovies }) {
       }
 
       parts.push(
+        <>
+        <br/>
         <span key={start} className="quoted-title">
           {quotedTitle}
         </span>
+        </>
       );
 
       lastIndex = end;
@@ -117,7 +123,7 @@ function Chatbox({ setPopupMovies, setShowRecommendedMovies }) {
   return (
     <div className={`chatbox ${isCollapsed ? 'collapsed' : ''}`}>
       <div className="chatbox-header" onClick={toggleChatbox}>
-        <div className="d-flex justify-content-center align-items-center p-3">
+        <div>
           {isCollapsed ? (
             <>
               <FontAwesomeIcon icon={faCircleChevronUp} size="1x" />
@@ -146,7 +152,7 @@ function Chatbox({ setPopupMovies, setShowRecommendedMovies }) {
           </div>
         )}
       </div>
-      <div className="row">
+      <div className="row" style={{height:'30px'}}>
         <div className="d-flex align-items-center">
           <div className="chatbox-input">
             <input
@@ -166,7 +172,7 @@ function Chatbox({ setPopupMovies, setShowRecommendedMovies }) {
               <button className="submit-button" onClick={handleInputSubmit}>
                 <FontAwesomeIcon icon={faSquareCaretRight} size="1x" />
               </button>
-              <button type='button' onClick={toggleRec}>Recommended</button>
+              <button type='button' onClick={toggleViewRec}>Recommended</button>
             </div>
           )}
         </div>

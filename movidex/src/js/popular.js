@@ -4,9 +4,11 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 
-async function getPopular() {
+async function getPopular(page) {
+  let pg = '';
+  if(page){pg = `?page=${page}`}
   const rd_token = 'Bearer ' + process.env.TMDB_RD_TOKEN;
-  const url = 'https://api.themoviedb.org/3/movie/popular';
+  const url = `https://api.themoviedb.org/3/movie/popular${pg}`;
   const options = {
     method: 'GET',
     headers: {

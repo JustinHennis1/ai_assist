@@ -1,38 +1,70 @@
-import React, { useState } from 'react';
+// Inside the Reviews component
+import React, { useEffect, useState } from 'react';
 import '../css/review.css';
 
-function Reviews() {
-  const [isOpen, setIsOpen] = useState(false);
-  const [isOpen2, setIsOpen2] = useState(false);
-  const toggleBox = () => {
-    setIsOpen(!isOpen);
-  };
-  const toggleBox2 = () => {
-    setIsOpen2(!isOpen2);
-  };
+function Reviews({ movie, onClose }) {
+  const [reviews, setReviews] = useState([]);
+
+  useEffect(() => {
+    async function queryReview() {
+      const page = '1';
+      const requestBody = {
+        id: movie.id,
+        lang: 'en-US',
+        pg: page,
+      };
+
+      try {
+        const response = await fetch('http://localhost:5000/api/review', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(requestBody)
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to fetch reviews');
+        }
+        const revs = await response.json();
+        setReviews(revs.results || []);
+      } catch (error) {
+        console.error('Error fetching reviews:', error);
+      }
+    }
+    queryReview();
+  }, [movie.id]);
 
   return (
-    <div>
-    <div className={`box ${isOpen ? 'open' : ''}`} onClick={toggleBox}>
-      <div className="box-office">
-        {isOpen ? <h1>Reviews</h1> : ""}
+    <div >
+      <div className="review-content">
+        <div style={{color:'black'}}>
+          {reviews == [] && <p>No reviews yet</p>}
+          {reviews.map(review => (
+            <li key={review.id} className="review-item">
+            <div className="review-header">
+              <img 
+                src={review.author_details.avatar_path 
+                  ? `https://image.tmdb.org/t/p/w45${review.author_details.avatar_path}`
+                  : 'default-avatar.png'} 
+                alt={`${review.author}'s avatar`}
+                className="avatar"
+              />
+              <div className="author-info">
+                <h4>{review.author}</h4>
+                <p>Rating: {review.author_details.rating || 'N/A'}</p>
+              </div>
+            </div>
+            <p>{review.content}</p>
+            <a href={review.url} target="_blank" rel="noopener noreferrer">Read more</a>
+          </li>
+          ))}
+         
+        </div>
       </div>
-      <div className={`sidebar ${isOpen ? 'open' : ''}`}>
-        {isOpen ? "" : "Reviews"}
+      <div className="review-close" onClick={onClose}>
+        X
       </div>
-      
-    </div>
-
-
-    <div className={`box2 ${isOpen2 ? 'open' : ''}`} onClick={toggleBox2}>
-      <div className="box-office2">
-        {isOpen2 ? <h1>Youtube</h1> : ""}
-      </div>
-      <div className={`sidebar ${isOpen2 ? 'open' : ''}`}>
-        {isOpen2 ? "" : <>You <span style={{backgroundColor:'red', borderRadius: '5'}}>Tube</span></>}
-      </div>
-      
-    </div>
     </div>
   );
 }

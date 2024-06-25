@@ -3,9 +3,11 @@ const fetch = require('node-fetch');
 const dotenv = require("dotenv");
 dotenv.config();
 
-async function getUpcoming() {
+async function getUpcoming(page) {
+  let pg = '';
+  if(page){pg = `?page=${page}`}
   const rd_token = 'Bearer ' + process.env.TMDB_RD_TOKEN;
-  const url = 'https://api.themoviedb.org/3/movie/upcoming';
+  const url = `https://api.themoviedb.org/3/movie/upcoming${pg}`;
   const options = {
     method: 'GET',
     headers: {

@@ -3,9 +3,11 @@ const dotenv = require("dotenv");
 dotenv.config();
 const fetch = require('node-fetch');
 
-async function getTopRated() {
+async function getTopRated(page) {
+  let pg = '';
+  if(page){pg = `?page=${page}`}
   const rd_token = 'Bearer ' + process.env.TMDB_RD_TOKEN;
-  const url = 'https://api.themoviedb.org/3/movie/top_rated';
+  const url = `https://api.themoviedb.org/3/movie/top_rated${pg}`;
   const options = {
     method: 'GET',
     headers: {

@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, {  useState } from 'react';
 import Chatbox from './Chatbox';
 import MovieCardList from './MovieCardList';
-import Reviews from './Reviews';
-import PopupList from './PopupList';
+import ChatRecom from './ChatRecom';
 import '../css/home.css';
+import SearchComponent from './SearchComponent';
 
 function Home() {
   const [popupMovies, setPopupMovies] = useState([]);
@@ -12,14 +12,23 @@ function Home() {
   return (
     <div className="home">
       <MovieCardList />
+     
+      <div className='sback'>
+        
+         <SearchComponent/>
+         
+      </div>
+      {showRecommendedMovies && (
+              <ChatRecom movieTitles = {popupMovies}/>
+      )}
+
       <Chatbox
         setPopupMovies={setPopupMovies}
         setShowRecommendedMovies={setShowRecommendedMovies}
       />
-      {showRecommendedMovies && (
-        <PopupList movieTitles={popupMovies} />
-      )}
-      <Reviews />
+
+     
+      
     </div>
   );
 }

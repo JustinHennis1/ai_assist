@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import '../css/cardlist.css';
 
 const MovieVideo = ({ movie }) => {
   const [videoKey, setVideoKey] = useState('');
@@ -16,12 +17,21 @@ const MovieVideo = ({ movie }) => {
         const response = await fetch(`http://localhost:5000/api/youtube/${movie.id}`);
         const data = await response.json();
 
-        // Find the first video that is a trailer
-        const trailer = data.results.find(video => video.type === 'Trailer');
-        if (trailer) {
-          setVideoKey(trailer.key);
+        // Filter out the unwanted trailer
+        const validTrailers = data.results.filter(video => video.name !== "Official Trailer with Soren Dubbing");
+
+        // Find the final trailer first, if available
+        const finalTrailer = validTrailers.find(video => video.name.toLowerCase().includes('final trailer'));
+        if (finalTrailer) {
+          setVideoKey(finalTrailer.key);
         } else {
-          setError(true);
+          // If no final trailer, find the first available trailer
+          const trailer = validTrailers.find(video => video.type === 'Trailer');
+          if (trailer) {
+            setVideoKey(trailer.key);
+          } else {
+            setError(true);
+          }
         }
       } catch (error) {
         console.error('Failed to fetch movie trailer:', error);
@@ -45,8 +55,6 @@ const MovieVideo = ({ movie }) => {
   return (
     <div className="movie-video">
       <iframe
-        width="100%"
-        height="250px"
         src={`https://www.youtube.com/embed/${videoKey}`}
         title={movie.title}
         frameBorder="0"
