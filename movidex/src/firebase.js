@@ -10,7 +10,7 @@ import { getAuth } from "firebase/auth";
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyAkqgaQs8AunAwUIzVwizqw1lM8C_N8aig",
+  apiKey: "AIzaSyAkqgaQs8AunAwUIzVwizqw1lM8C_N8aig", //ok to leave in
   authDomain: "movidex-17721.firebaseapp.com",
   projectId: "movidex-17721",
   storageBucket: "movidex-17721.appspot.com",
