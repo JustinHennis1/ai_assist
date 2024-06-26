@@ -8,10 +8,15 @@ import SearchComponent from './SearchComponent';
 function Home() {
   const [popupMovies, setPopupMovies] = useState([]);
   const [showRecommendedMovies, setShowRecommendedMovies] = useState(false);
+  const [isOpen, setOpen] = useState(false);
+
+  const handleOpenBox = () => {
+    setOpen(!isOpen);
+  }
 
   return (
     <div className="home">
-      <MovieCardList />
+      <MovieCardList setOpen={handleOpenBox}/>
      
       <div className='sback'>
         
@@ -25,6 +30,7 @@ function Home() {
       <Chatbox
         setPopupMovies={setPopupMovies}
         setShowRecommendedMovies={setShowRecommendedMovies}
+        isOpen={isOpen}
       />
 
      

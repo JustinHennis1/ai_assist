@@ -4,13 +4,16 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleChevronUp, faCircleChevronDown, faSquareCaretRight } from '@fortawesome/free-solid-svg-icons';
 import { getAIResponse } from '../js/queries';
 
-function Chatbox({ setPopupMovies, setShowRecommendedMovies }) {
+function Chatbox({ setPopupMovies, setShowRecommendedMovies, isOpen }) {
   const [input, setInput] = useState('');
   const [isCollapsed, setIsCollapsed] = useState(true);
   const [isWaiting, setIsWait] = useState(false);
   const [messages, setMessages] = useState([]);
   const inputRef = useRef(null);
 
+  useEffect(() => {
+    setIsCollapsed(!isOpen);
+  }, [isOpen]);
 
   const handleInputChange = (e) => {
     setInput(e.target.value);
@@ -27,7 +30,7 @@ function Chatbox({ setPopupMovies, setShowRecommendedMovies }) {
       recheaderElement.scrollIntoView({ behavior: 'smooth' });
     }
   };
-  
+
   const handleInputSubmit = useCallback(async () => {
     if (input.trim()) {
       setInput(''); // clear input
@@ -82,10 +85,10 @@ function Chatbox({ setPopupMovies, setShowRecommendedMovies }) {
 
       parts.push(
         <>
-        <br/>
-        <span key={start} className="quoted-title">
-          {quotedTitle}
-        </span>
+          <br />
+          <span key={start} className="quoted-title">
+            {quotedTitle}
+          </span>
         </>
       );
 
@@ -152,7 +155,7 @@ function Chatbox({ setPopupMovies, setShowRecommendedMovies }) {
           </div>
         )}
       </div>
-      <div className="row" style={{height:'30px'}}>
+      <div className="row" style={{ height: '30px' }}>
         <div className="d-flex align-items-center">
           <div className="chatbox-input">
             <input

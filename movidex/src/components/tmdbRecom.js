@@ -47,7 +47,7 @@ const TMDB_Recommended = ({movie, onClose}) => {
           lang: language,
           pg: page,
         };
-        console.log(requestBody);
+        //console.log(requestBody);
         try {
           const response = await fetch('http://localhost:5000/api/recommendations', {
             method: 'POST',

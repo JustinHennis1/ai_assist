@@ -94,7 +94,18 @@ const SingleView = ({ movie, onClose }) => {
   return (
     <div className={style.card} style={{ backgroundImage: `url(https://image.tmdb.org/t/p/w1280${movie.backdrop_path})` }}>
       <div className='row'>
+        <div className='col' style={{width:'auto'}}>
         <MoviePoster movie={movie} />
+        <div className='row'>
+        <button type="button" className={style.coolbtn} onClick={() => toggleReviews(movie.id)}>
+          Reviews
+        </button>
+        <button type="button" className={style.coolbtn} onClick={() => handleGetImdbId(movie.id)}>
+          IMDB
+        </button>
+
+      </div>
+        </div>
         <div className={style.cardcontent}>
           <div className={style.cardtext}>
             <div className='row' style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
@@ -175,15 +186,6 @@ const SingleView = ({ movie, onClose }) => {
       </div>
       <div className='row'>
         <MovieVideo movie={movie} />
-      </div>
-      <div className='row'>
-        <button type="button" className={style.coolbtn} onClick={() => toggleReviews(movie.id)}>
-          Reviews
-        </button>
-        <button type="button" className={style.coolbtn} onClick={() => handleGetImdbId(movie.id)}>
-          IMDB
-        </button>
-
       </div>
       <div className={style.cardclose} onClick={onClose}>
         X

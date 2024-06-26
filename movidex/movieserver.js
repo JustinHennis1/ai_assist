@@ -48,7 +48,7 @@ let conversationHistory = [
 
 app.post('/api/getAIResponse', async (req, res) => {
   const { userInput } = req.body;
-  console.log("Received user input:", userInput);
+  //console.log("Received user input:", userInput);
 
   // Add the new user input to the conversation history
   conversationHistory.push({ role: 'user', content: userInput });
@@ -60,7 +60,7 @@ app.post('/api/getAIResponse', async (req, res) => {
     });
 
     const aiResponse = result.choices[0].message.content;
-    console.log("AI Response:", aiResponse);
+    //console.log("AI Response:", aiResponse);
 
     // Add the AI response to the conversation history
     conversationHistory.push({ role: 'assistant', content: aiResponse });

@@ -6,6 +6,7 @@ import { removeMovieFromWatchlist, fetchUserWatchlist } from '../db_services/Wat
 import { addMovieToRated, removeMovieFromRated, fetchUserRatedMovies } from '../db_services/RatedMovies.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar, faX, faCheckDouble } from '@fortawesome/free-solid-svg-icons';
+import SingleView from './SingleView.js';
 
 const Watchlist = () => {
   const [watchlist, setWatchlist] = useState([]);
@@ -14,9 +15,18 @@ const Watchlist = () => {
   const [showRating, setShowRating] = useState({});
   const [ratings, setRatings] = useState({});
   const [hoverRating, setHoverRating] = useState({});
+  const [selectedMovie, setSelectedMovie] = useState(null);
 
   const { currentUser } = useAuth();
   const sessionid  = useContext(SessionContext);
+
+  const handleMovieSelect = (movie) => {
+    setSelectedMovie(movie);
+  };
+
+  const handleClose = () => {
+    setSelectedMovie(null);
+  };
 
   useEffect(() => {
     const getRated = async () => {
@@ -29,7 +39,7 @@ const Watchlist = () => {
   }, [currentUser]);
 
   const handleRatingSubmit = async (movieId, rating) => {
-    console.log(rating);
+    //console.log(rating);
     const reqbody = {
       rating: rating,
       movieid: movieId,
@@ -54,8 +64,8 @@ const Watchlist = () => {
         const errorDetails = await response.json();
         throw new Error(`HTTP error! status: ${response.status}, details: ${errorDetails.message}`);
       }
-      const data = await response.json();
-      alert(`Rating for movie ${movieId}: ${data}`);
+      //const data = await response.json();
+      //alert(`Rating for movie ${movieId}: ${data}`);
 
       setShowRating((prevShowRating) => ({
         ...prevShowRating,
@@ -91,7 +101,8 @@ const Watchlist = () => {
     }));
   };
 
-  const handleStarClick = (movieId) => {
+  const handleStarClick = (movieId, event) => {
+    event.stopPropagation();
     setShowRating((prevShowRating) => ({
       ...prevShowRating,
       [movieId]: !prevShowRating[movieId],
@@ -109,7 +120,8 @@ const Watchlist = () => {
     return ratedlist.some((movie) => movie.id === movieId);
   };
 
-  const handleRemoveMovie = async (movieId) => {
+  const handleRemoveMovie = async (movieId, event) => {
+    event.stopPropagation();
     await removeMovieFromWatchlist(movieId);
     setWatchlist(watchlist.filter(movie => movie.id !== movieId));
   };
@@ -179,6 +191,9 @@ const Watchlist = () => {
     return stars;
   };
 
+
+  
+
   return (
     <div className="watchlist-container">
       <h1 style={{fontFamily:'Lora'}}>My Watchlist</h1>
@@ -191,6 +206,7 @@ const Watchlist = () => {
               style={{ backgroundImage: `url(https://image.tmdb.org/t/p/w342${movie.poster_path})` }}
               onMouseEnter={() => setHoveredMovieId(movie.id)}
               onMouseLeave={() => setHoveredMovieId(null)}
+              onClick={() => handleMovieSelect(movie)}
             >
               <div className="icon">
                 {hoveredMovieId === movie.id && (
@@ -200,10 +216,11 @@ const Watchlist = () => {
                     ) : isMovieInRatedMovies(movie.id) ? (
                       <FontAwesomeIcon icon={faCheckDouble} title="Rated" color="green" />
                     ) : (
-                      <FontAwesomeIcon icon={faStar} title="Rate" color="red" onClick={() => handleStarClick(movie.id)} />
+                      <FontAwesomeIcon icon={faStar} title="Rate" color="red" onClick={(event) => handleStarClick(movie.id, event)} />
                     )}
+               
                     <div style={{background:'black', borderRadius:'360px', paddingLeft:'11px', paddingRight:'11px'}}>
-                      <FontAwesomeIcon icon={faX} size='2xs' color='red' onClick={() => handleRemoveMovie(movie.id)} />
+                      <FontAwesomeIcon icon={faX} size='2xs' color='red' onClick={(event) => handleRemoveMovie(movie.id, event)} />
                     </div>
                   </>
                 )}
@@ -220,13 +237,23 @@ const Watchlist = () => {
           ))}
         </div>
       ) : (
-      
-        <div style={{height:'34.2vh', color:'white'}}>
-          <h3 style={{fontSize:'20px'}}>Whoops...</h3>
-          <a href="/sign-in" className='link' style={{color:'#c00', paddingRight:'5px'}}>Sign In</a>
-          To View Your Watchlist
-          </div>
+        <>
+          { !currentUser &&
+            <div style={{height:'34.2vh', color:'white'}}>
+              <h3 style={{fontSize:'20px'}}>Whoops...</h3>
+              <a href="/sign-in" className='link' style={{color:'#c00', paddingRight:'5px'}}>Sign In</a>
+              To View Your Watchlist
+              </div>
+          }
+          {currentUser && 
+              <div style={{height:'34.2vh', color:'white'}}>
+                  <h3 style={{fontSize:'20px'}}>No movies in watchlist</h3>   
+              </div>
+          }
+        </>
       )}
+
+      {selectedMovie && <SingleView movie={selectedMovie} onClose={handleClose}/>}
     </div>
   );
 };

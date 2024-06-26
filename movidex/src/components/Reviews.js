@@ -1,6 +1,8 @@
 // Inside the Reviews component
 import React, { useEffect, useState } from 'react';
 import '../css/review.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faStar } from '@fortawesome/free-solid-svg-icons';
 
 function Reviews({ movie, onClose }) {
   const [reviews, setReviews] = useState([]);
@@ -52,7 +54,9 @@ function Reviews({ movie, onClose }) {
               />
               <div className="author-info">
                 <h4>{review.author}</h4>
-                <p>Rating: {review.author_details.rating || 'N/A'}</p>
+                <p>Rating: {review.author_details.rating || 'N/A'}
+                  <FontAwesomeIcon icon={faStar} color='#FFD43B'  />
+                </p>
               </div>
             </div>
             <p>{review.content}</p>

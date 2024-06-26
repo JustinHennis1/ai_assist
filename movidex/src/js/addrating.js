@@ -1,6 +1,6 @@
 async function addRating(req, res) {
     const { rating, movieid, sessionid, isguest } = req.body;
-    console.log('Request body:', req.body);
+    //console.log('Request body:', req.body);
   
     let addon = '';
     if (isguest) {
@@ -30,7 +30,7 @@ async function addRating(req, res) {
         throw new Error('Error response is not okay');
       }
       const json = await response.json();
-      console.log('Response:', json);
+      // console.log('Response:', json);
       res.json(json);
     } catch (e) {
       console.error('Error:', e);

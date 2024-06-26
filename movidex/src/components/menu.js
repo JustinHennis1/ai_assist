@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from './AuthContext';
 import { signOut, deleteUser, EmailAuthProvider, reauthenticateWithCredential } from 'firebase/auth';
 import { auth, db } from '../firebase';
 import { doc, deleteDoc, collection, getDocs } from 'firebase/firestore';
-import '../css/menu.css';
+import styles from '../css/menu.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 
@@ -14,6 +14,7 @@ function Menu() {
   const [showReauthForm, setShowReauthForm] = useState(false);
   const [password, setPassword] = useState('');
   const { currentUser } = useAuth();
+  const dropdownRef = useRef(null);
 
   const handleLogout = async () => {
     try {
@@ -75,45 +76,56 @@ function Menu() {
     setDropdownOpen(!dropdownOpen);
   };
 
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setDropdownOpen(false);
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [dropdownRef]);
+
   return (
-    <nav className="navbar">
-      <div className="container-fluid">
-        <ul className="navbar-nav">
-          <li className="nav-item">
-            <Link to="/" className={location.pathname === "/" ? "nav-link active" : "nav-link"}>
+    <nav className={styles.navbar}>
+      <div className={styles.containerfluid}>
+        <ul className={styles.navbarnav}>
+          <li className={styles.navitem}>
+            <Link to="/" className={`${styles.navlink} ${location.pathname === "/" ? styles.active : ""}`}>
               Home
             </Link>
           </li>
-          <li className="nav-item">
+          <li className={styles.navitem}>
             <Link
               to="/watchlist"
-              className={location.pathname === "/watchlist" ? "nav-link active" : "nav-link"}
+              className={`${styles.navlink} ${location.pathname === "/watchlist" ? styles.active : ""}`}
             >
               Watchlist
             </Link>
           </li>
         </ul>
 
-        <div className="d-flex align-items-center">
+        <div className={styles.dflex}>
           {currentUser ? (
-            <>
-              <span className="nav-link" onClick={toggleDropdown}>
-                <FontAwesomeIcon icon={faUser} color="white" />
+            <div className={styles.dropdownContainer} ref={dropdownRef}>
+              <span className={`${styles.navlink} ${styles.userIcon}`} onClick={toggleDropdown}>
+                <FontAwesomeIcon icon={faUser} />
               </span>
-              <Link to="#" className="nav-link" onClick={handleLogout}>
-                Logout
-              </Link>
               {dropdownOpen && (
-                <ul className="dropdown-menu show">
-                  <li><button className="dropdown-item" onClick={handleDeleteAccount}>Delete Account</button></li>
+                <ul className={`${styles.dropdownmenu} ${styles.show}`}>
+                  <li><button className={styles.dropdownitem} onClick={handleLogout}>Logout</button></li>
+                  <li><button className={styles.dropdownitem} onClick={handleDeleteAccount}>Delete Account</button></li>
                 </ul>
               )}
-            </>
+            </div>
           ) : (
             location.pathname === '/' && (
               <Link
                 to="/sign-in"
-                className={location.pathname === "/sign-in" ? "nav-link active" : "nav-link"}
+                className={`${styles.navlink} ${location.pathname === "/sign-in" ? styles.active : ""}`}
               >
                 Login
               </Link>

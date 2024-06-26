@@ -1,6 +1,6 @@
 // src/App.js
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Menu from './components/menu';
 import Home from './components/Home';
 import { SessionProvider } from './components/SessionContext';
@@ -17,7 +17,7 @@ function App() {
     <Router>
        <AuthProvider>
           <SessionProvider>
-            <div style={{ backgroundColor: '#333' }}>
+            <div style={{ backgroundColor: '#111' }}>
               <Menu />
               <Routes>
                 <Route exact path="/" element={<Home />} />
@@ -26,6 +26,7 @@ function App() {
                 <Route path="/reset-password" element={<ResetPasswordPage />} />
                 <Route path="/create-account" element={<CreateAccountCard />} />
               </Routes>
+             
             </div>
             <Footer />
           </SessionProvider>

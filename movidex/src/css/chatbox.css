@@ -70,7 +70,7 @@
   
   .chatbox-input {
     display: flex;
-    width: 100%;
+    width: 90%;
     border: none;
     align-items: center;
     z-index: 2;
@@ -81,6 +81,7 @@
     color: white;
     display: block;
     width: 35vw;
+    height: 40px;
     border: none;
     border-radius: 80px;
     padding: 15px;
@@ -149,6 +150,21 @@
   @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
+  }
+
+  @media (width < 890px) {
+    .submitDiv {
+      bottom: 45px;
+    }
+
+    .chatbox-input {
+      width: 100%;
+    }
+
+    .chatbox-input-field {
+      width: 45vw;
+    }
+    
   }
   
   @media (width < 582px) and (width > 320px) {

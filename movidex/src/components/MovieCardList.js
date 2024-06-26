@@ -12,7 +12,7 @@ import { addMovieToRated, removeMovieFromRated, fetchUserRatedMovies } from '../
 import Reviews from './Reviews.js';
 import TMDB_Recommended from './tmdbRecom.js';
 
-function MovieCardList() {
+function MovieCardList({setOpen}) {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [currentFilter, setCurrentFilter] = useState('inTheaters');
   const [moviesInTheaters, setTheaterMovies] = useState([]);
@@ -34,6 +34,7 @@ function MovieCardList() {
   const [showSlider, setShowSlider] = useState({});
   const [ratedMovie, setRatedMovie] = useState(null);
   const [ratings, setRatings] = useState({});
+  
   
  
   const { currentUser } = useAuth();
@@ -79,8 +80,9 @@ function MovieCardList() {
       console.error('Failed to fetch IMDB ID:', error);
     }
   };
-  
 
+
+  
   const handleAddMovie = async (movie) => {
     await addMovieToWatchlist(movie);
     setWatchlist([...watchlist, movie]);
@@ -416,9 +418,15 @@ const getButtonsToDisplay = () => {
                     ) : (
                       <FontAwesomeIcon className='cardbtn' icon={faStar} size="2x" title="Rate" color="red" onClick={() => handleStarClick(movie.id)} />
                     )}
-                    <FontAwesomeIcon icon={faCircleNodes} size='2x' className='spin cardbtn' title="Query GPT"/>
+
+                    {/*Query GPT  */}
+                    <FontAwesomeIcon icon={faCircleNodes} size='2x' className='spin cardbtn' title="Query GPT" onClick={setOpen}/>
+
+                    {/*Adding to watchlist  */}
                     {currentUser && !isMovieInWatchlist(movie.id)? (<FontAwesomeIcon className='cardbtn' icon={faPlus} size='2x' title="Add to Watchlist" onClick={() => handleAddMovie(movie)}/>) : (<></>) }
+                    {/*Removing from watchlist  */}
                     {currentUser && isMovieInWatchlist(movie.id)? (<FontAwesomeIcon className='cardbtn' icon={faX} size='2x' title="Remove From Watchlist" onClick={() => handleRemoveMovie(movie.id)}/>) : (<></>) }
+                 
                   </div>
                   
                   
